@@ -56,4 +56,19 @@ public class MySimpleLinkedList<T> {
 		return resultado;
 	}
 	
-}
+public int indexOf(T element) {
+		
+		Node<T> actual=this.first;
+		int index=0;
+		
+		while(actual!=null) {
+			if(actual.getInfo().equals(element)) {
+				return index; // Retorna la posición del elemento si lo encuentra
+				
+			}
+			actual = actual.getNext();
+			index++;
+		}
+		
+		return -1;
+	}
