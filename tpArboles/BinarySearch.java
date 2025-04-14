@@ -153,14 +153,22 @@ public class BinarySearchTree {
     	return getMaxNode(start.getRight());
 	}
 	
+	
+	
+	
+	
 	public int getHeight() {
 		return getHeight(root)-1; //Le resta 1 al resultado final, porque el 
 									//método recursivo considera la raíz como nivel 1, pero por 
 									//convención muchas veces se toma la altura como cantidad de aristas, no de nodos, 
 									//por eso se ajusta con -1.
 	}
-	//Un árbol con solo la raíz tiene altura 0.
 
+
+
+	
+	//Un árbol con solo la raíz tiene altura 0.
+	
 	//Si hay un nodo raíz y un hijo (ya sea a la izquierda o derecha), la altura es 1.
 
 	//Y así sucesivamente.
@@ -181,5 +189,85 @@ public class BinarySearchTree {
 		return Math.max(sumLeft, sumRight);//Finalmente, devuelve la mayor de las dos alturas: izquierda o derecha.
 
 											//Porque la altura del árbol es el camino más largo desde la raíz hasta una hoja.
+	}
+
+
+	public void printPosOrder(){ // La complejidad es O(n), ya que recorre todos los nodos del árbol.
+		printPostOrder(this.root);
+		System.out.println();
+	}
+
+	private void printPosOrder(TreeNode node){
+		if (node!=null){
+			printPosOrder(this.getLeft());
+			printPosOrder(this.getRight());
+			System.out.print(node.getValue()+"");
+		}
+	}
+
+
+	// La complejidad es O(n), ya que recorre todos los nodos del árbol.
+	public void printPreOrder(){
+		printPreOrder(this.root);
+		System.out.println();
+	}
+
+	private void printPreOrder(TreeNode node){
+		if (node!=null){
+			System.out.print(node.getValue()+"");
+			printPreOrder(this.getLeft());
+			printPreOrder(this.getRight());
+		}
+	}
+
+
+	// La complejidad es O(n), ya que recorre todos los nodos del árbol.
+	public void printInOrder(){
+		printInOrder(this.root);
+		System.out.println();
+	}
+
+	private void printInOrder(TreeNode node){
+		if (node!=null){
+			printInOrder(this.getLeft());
+			System.out.print(node.getValue()+"");
+			printInOrder(this.getRight());
+		}
+	}
+
+
+	public List<Integer> getLongestBranch(){
+		List<Integer> longestBranch = new ArrayList<>();
+		List<Integer> currentBranch = new ArrayList<>();
+		getLongestBranch(root, longestBranch, currentBranch, 0);
+		return longestBranch();
+	}
+
+	private ArrayList<> getLongestBranch(TreeNode node, ArrayList longestBranch, ArrayList currentBranch, int level){
+		if (node!=null){
+			currentBranch.add(node.getValue());
+
+			if (node.getLeft()==null && node.getRight()==null){
+				if(currentBranch.size()>longestBranch.size()){
+					longestBranch.clear();
+					longestBranch.addAll(currentBranch);
+				}
+			} else {
+				getLongestBranch(node.getLeft(), longestBranch, currentBranch, level +1);
+				getLongestBranch(node.getRight(), longestBranch, currentBranch, level +1);
+			}
+
+			currentBranch.remove(currentBranch.size() - 1); //Cuando terminas de visitar una rama, necesitas retroceder (backtrack) para probar otras ramas. Al retroceder, tienes que eliminar el último nodo agregado porque ya lo exploraste completamente.
+
+									//Este paso garantiza que al subir de nuevo un nivel en el árbol, currentBranch quede en el mismo estado que estaba antes de bajar por esa rama.
+									// si no hago el REMOVE, currentBranch acumularía nodos de ramas anteriores, y eso rompería la lógica. Te daría resultados incorrectos, mezclando caminos que no existen en el árbol.
+		}
+	}
+
+
+
+	/* Ejercicio 2
+    Dado un árbol binario de búsquedas que almacena números enteros, implementar un algoritmo
+    que retorne la suma de todos los nodos internos del árbol. */
 	}
 }
