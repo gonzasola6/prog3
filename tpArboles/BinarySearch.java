@@ -267,7 +267,20 @@ public class BinarySearchTree {
 
 
 	/* Ejercicio 2
-    Dado un árbol binario de búsquedas que almacena números enteros, implementar un algoritmo
-    que retorne la suma de todos los nodos internos del árbol. */
+    		Dado un árbol binario de búsquedas que almacena números enteros, implementar un algoritmo
+    		que retorne la suma de todos los nodos internos del árbol. */
+
+	public int sumInternalNodes(){
+		sumInternalNodes(this.root);
 	}
+
+	private int sumInternalNodes(TreeNode node){
+		if (node==null || (node.getLeft() == null && node.getRight() == null)){
+			return 0;
+		}
+		return node.getValue() + sumInternalNodes(node.getLeft()) + sumInternalNodes(node.getRight());
+	}
+	
+	
+	
 }
