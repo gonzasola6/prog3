@@ -6,21 +6,40 @@ import java.util.Iterator;
 
 public class GrafoDirigido<T> implements Grafo<T> {
 
-	private HashMap<Integer, LinkedList<Arco<T>> vertices;
-
+	private HashMap<Integer, LinkedList<Arco<T>> vertices; //Clave: el ID de un vértice. //Valor: una lista de arcos salientes desde ese vértice.
+	//Arco<T> representa una arista dirigida, con al menos un método getVerticeDestino() que devuelve el vértice destino del arco.
+	
 	public GrafoDirigido(){
 		this.vertices= new HashMap();
 	}
 	
 	@Override
 	public void agregarVertice(int verticeId) {
-		// TODO Auto-generated method stub
+		if (vertices.containsKey(verticeId)){
+			System.out.println("El vertice "+ verticeId + " ya se ga agregado" );
+		} else {
+			vertices.put(verticeId, new LinkedList<Arco<T>>());
+		}
 	}
 
 	@Override
-	public void borrarVertice(int verticeId) {
-		// TODO Auto-generated method stub
+	public void borrarVertice(int verticeId) { //eliminar un vértice del grafo, junto con todas las conexiones hacia él (es decir, eliminarlo como destino en cualquier arco
+		if (!vertices.containsKey(verticeId){
+			System.out.println("El vertice " + verticeId + " no existe");
+		}else{
+			//eliminar el vertice de los conjuntos adyacentes de los demas vertices
+			for (Integer vecino: vertices.keySet()){ //Recorre todos los vértices del grafo.
+				LinkedList<Arco<T>> arcos = vertices.get(vecino); //Para cada uno, obtiene su lista de arcos salientes
+				arcos.removeIf(arco->arco.getVerticeDestino()= verticeId); //removeIf(...) para eliminar cualquier arco que termine en el vértice que queremos borrar.
+		}
+		//Eliminar el vertice
+		vertices.remove(verticeId); //elimina el propio vértice del mapa (y con eso también sus arcos salientes).
+		}
 	}
+	//Al borrar un vértice, se eliminan sus arcos entrantes y salientes, pero no se crean conexiones nuevas automáticamente.
+	//La estructura del grafo refleja conexiones explícitas.
+	//Si eliminás un nodo (vértice), estás aceptando que ya no existe ni como punto de paso ni como destino.
+	//Cualquier "reconexión" automática cambiaría la topología del grafo, lo cual no es correcto salvo que el problema lo pida explícitamente.
 
 	@Override
 	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
