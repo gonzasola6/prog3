@@ -2,8 +2,16 @@ package ProgramacionIII.tp4;
 
 import java.util.Iterator;
 
+
+
 public class GrafoDirigido<T> implements Grafo<T> {
 
+	private HashMap<Integer, LinkedList<Arco<T>> vertices;
+
+	public GrafoDirigido(){
+		this.vertices= new HashMap();
+	}
+	
 	@Override
 	public void agregarVertice(int verticeId) {
 		// TODO Auto-generated method stub
