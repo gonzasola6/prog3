@@ -43,24 +43,44 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	@Override
 	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
-		// TODO Auto-generated method stub
+		if (!vertices.containsKey(verticeId1) || !vertices.containsKey(verticeId2){
+			System.out.println("El grafo no coniene almenos uno de los vertices");
+		}else{
+			vertices.get(verticeId).add(New Arco<T>(verticeId1, verdiceId2, etiqueta);
+		}
 	}
 
 	@Override
 	public void borrarArco(int verticeId1, int verticeId2) {
-		// TODO Auto-generated method stub
+		if (!vertices.containsKey(verticeId1) || !vertices.containsKey(verticeId2)){
+			System.out.println("El grafo no contiene al menos uno de los vértices."");
+		}else{
+		//eliminar el arco de la lista de adyacencia de verticeId1
+		LinkedList<Arco<T>> arcos = vertices.get(verticeId1);
+		arcos.removeIf(arco -> arco.getVerticeDestino() == verticeId2); // es un método de las colecciones de Java que elimina los elementos que cumplen con cierta condición.
+		}
 	}
 
 	@Override
 	public boolean contieneVertice(int verticeId) {
-		// TODO Auto-generated method stub
-		return false;
+		return vertices.containsKey(verticeId);
 	}
 
 	@Override
-	public boolean existeArco(int verticeId1, int verticeId2) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean existeArco(int verticeId1, int verticeId2) { //verificar si existe un arco desde un vértice verticeId1 hacia otro vértice verticeId2.
+		if (!vertices.containsKey(verticeId1) || !vertices.containsKey(verticeId2)) {
+       			System.out.println("El grafo no contiene al menos uno de los vértices.");
+            		return false; //no puede existir el arco si faltan los vértices.
+		} else {
+			LinkedList<Arco<T>> arcos = vertices.get(verticeId1); //Si los vértices existen, se recupera la lista de arcos salientes desde verticeId
+
+			for (Arco<T> arco : arcos) { //Se recorre cada arco desde verticeId1
+				if (arco.getVerticeDestino() == verticeId2){ //Si alguno de esos arcos apunta a verticeId2, entonces existe el arco, y se retorna true.
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 
 	@Override
